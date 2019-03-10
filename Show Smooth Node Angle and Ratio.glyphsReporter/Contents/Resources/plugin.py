@@ -18,10 +18,10 @@ from GlyphsApp.plugins import *
 
 
 
-class showSmoothNodeAngleAndProportion(ReporterPlugin):
+class showSmoothNodeAngleAndRatio(ReporterPlugin):
 
 	def settings(self):
-		self.menuName = u'Smooth Node Angle and Proportion'
+		self.menuName = u'Smooth Node Angle and Ratio'
 		self.masterIds = []
 
 
@@ -72,7 +72,7 @@ class showSmoothNodeAngleAndProportion(ReporterPlugin):
 		return True
 
 
-	def compatibleProportions(self, p, n, originalHypot, glyph):
+	def compatibleRatios(self, p, n, originalHypot, glyph):
 		# Check for compatibility against all masters and special layers
 		compatibility = []
 		for masterId in self.masterIds:
@@ -103,7 +103,7 @@ class showSmoothNodeAngleAndProportion(ReporterPlugin):
 		return True
 
 
-	def drawRoundedRectangleForStringAtPosition(self, string, center, fontsize, isAngle=False, compatible=False):
+	def drawRoundedRectangleForStringAtPosition(self, string, center, fontsize, isAngle=False, compatible=False, alignment="center"):
 		""" Adapted from Stem Thickness by Rafał Buchner """
 		layer = Glyphs.font.selectedLayers[0]
 		scale = self.getScale()
@@ -114,7 +114,10 @@ class showSmoothNodeAngleAndProportion(ReporterPlugin):
 		margin = 2
 		currentTab = Glyphs.font.currentTab
 		origin = currentTab.selectedLayerOrigin
-		center = NSPoint(center.x * scale + origin[0] , center.y * scale + origin[1])
+		if alignment == "center":
+			center = NSPoint(center.x * scale + origin[0] , center.y * scale + origin[1])
+		elif alignment == "bottom":
+			center = NSPoint(center.x * scale + origin[0] , center.y * scale - 22 + origin[1])
 		x, y = center
 
 		# Set colors
@@ -190,16 +193,18 @@ class showSmoothNodeAngleAndProportion(ReporterPlugin):
 					hypotenuses.append(math.hypot(pos1.x - pos2.x , pos1.y - pos2.y))
 				
 				# Calculate the percentages
-				factor = 100 / (hypotenuses[0] + hypotenuses[1])
-				compatibleProportions = self.compatibleProportions(p, n, hypotenuses, glyph)
+				# factor = 100 / (hypotenuses[0] + hypotenuses[1])
+				factor = round( (hypotenuses[0] / hypotenuses[1]), 2 )
+				compatibleRatios = self.compatibleRatios(p, n, hypotenuses, glyph)
 				# Draw the percentages
 				for i, offcurve in enumerate(offcurveNodes):
-					percent = round(hypotenuses[i] * factor, 1)
+					# percent = round(hypotenuses[i] * factor, 1)
 					pos1 = node.position
 					pos2 = offcurve.position
-					labelPosition = NSPoint(pos1.x + (pos2.x - pos1.x) / 2 , pos1.y + (pos2.y - pos1.y) / 2)
-					if offcurve.selected or node.selected:
-						self.drawRoundedRectangleForStringAtPosition(u"%s%%" % str(percent), labelPosition, 8 * scale, compatible=compatibleProportions)
+				# labelPosition = NSPoint(pos1.x + (pos2.x - pos1.x) / 2 , pos1.y + (pos2.y - pos1.y) / 2)
+				labelPosition = NSPoint(node.position.x , node.position.y)
+				# if offcurve.selected or node.selected:
+				self.drawRoundedRectangleForStringAtPosition(u"%s" % str(factor), labelPosition, 8 * scale, compatible=compatibleRatios, alignment="bottom")
 
 				# Draw the angle
 				pos1 = prevNode.position
@@ -243,7 +248,7 @@ class showSmoothNodeAngleAndProportion(ReporterPlugin):
 					
 					# Calculate the percentages
 					factor = 100 / (hypotenuses[0] + hypotenuses[1])
-					compatibleProportions = self.compatibleProportions(p, n, hypotenuses, glyph)
+					compatibleRatios = self.compatibleRatios(p, n, hypotenuses, glyph)
 					
 					# Get the angle
 					pos1 = prevNode.position
@@ -251,7 +256,7 @@ class showSmoothNodeAngleAndProportion(ReporterPlugin):
 					angle = self.getAngle(pos1, pos2)
 					compatibleAngles = self.compatibleAngles(p, n, angle, glyph)
 					
-					if not compatibleAngles and not compatibleProportions:
+					if not compatibleAngles and not compatibleRatios:
 						# scaledSize = fontsize / scale
 						width = handleSize*2
 						margin = 0

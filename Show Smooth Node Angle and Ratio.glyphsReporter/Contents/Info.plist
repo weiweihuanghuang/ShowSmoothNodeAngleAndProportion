@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>Show Smooth Node Angle and Proportion</string>
+	<string>Show Smooth Node Angle and Ratio</string>
 	<key>CFBundleExecutable</key>
 	<string>plugin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.harbortype.showSmoothNodeAngleAndProportion</string>
+	<string>com.harbortype.showSmoothNodeAngleAndRatio</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Show Smooth Node Angle and Proportion</string>
+	<string>Show Smooth Node Angle and Ratio</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
@@ -29,7 +29,7 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Harbor Type, 2019</string>
 	<key>NSPrincipalClass</key>
-	<string>showSmoothNodeAngleAndProportion</string>
+	<string>showSmoothNodeAngleAndRatio</string>
 	<key>PyMainFileNames</key>
 	<array>
 		<string>../MacOS/main.py</string>

@@ -1,12 +1,12 @@
-# Show Smooth Node Angle and Proportion
+# Show Smooth Node Angle and Ratio
 
 ![](/images/preview.png)
 
-This is a plugin for the [Glyphs font editor](https://glyphsapp.com/).  
+This is a plugin for the [Glyphs font editor](https://glyphsapp.com/).  It is based on [Show Smooth Node Angle and Proportion](https://github.com/harbortype/ShowSmoothNodeAngleAndProportion) by [harbortype](https://github.com/harbortype/ShowSmoothNodeAngleAndProportion).
 
-One of the most common problems when designing multiple master and variable fonts is kinks. They happen when you have **three points in a line that have different angles between masters AND have different proportions between points**. If all of the above is true, you will get kinks in interpolations. [(Read this tutorial for more info.)](https://glyphsapp.com/tutorials/multiple-masters-part-2-keeping-your-outlines-compatible)
+One of the most common problems when designing multiple master and variable fonts is kinks. They happen when you have **three points in a line that have different angles between masters AND have different proportions between points** show as a ratio. If all of the above is true, you will get kinks in interpolations. [(Read this tutorial for more info.)](https://glyphsapp.com/tutorials/multiple-masters-part-2-keeping-your-outlines-compatible)
 
-This reporter plugin will highlight the nodes that may produce kinks in yellow. When you select it, it will tell you the angle between the handles and their proportions. If any one of the values match the other masters (becoming light gray), a kink will not happen.
+This reporter plugin will highlight the nodes that may produce kinks in yellow. When you select it, it will tell you the angle between the handles and the ratio. If any one of the values match the other masters (becoming light gray), a kink will not happen.
 
 The labels will have different colors depending on what’s happening on the other masters:
 
