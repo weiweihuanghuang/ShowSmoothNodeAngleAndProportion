@@ -39,7 +39,7 @@ class showSmoothNodeAngleAndRatio(ReporterPlugin):
 		masterIds = set()
 		glyph = layer.parent
 		for lyr in glyph.layers:
-			if lyr.isSpecialLayer or lyr.isMasterLayer:
+			if lyr.isSpecialLayer or lyr.layerId == lyr.associatedMasterId:
 				masterIds.add(lyr.layerId)
 		return list(masterIds)
 
@@ -93,7 +93,9 @@ class showSmoothNodeAngleAndRatio(ReporterPlugin):
 			proportion2 = originalFactor * originalHypot[0]
 			# Check if the percentages are compatible
 			roundError = 0.5
-			if proportion1 >= proportion2 - roundError and proportion1 <= proportion2 + roundError:
+			# print "proportion1, proportion2: ", proportion1, proportion2
+			# if proportion1 >= proportion2 - roundError and proportion1 <= proportion2 + roundError:
+			if abs(proportion1 - proportion2) <= roundError:
 				compatibility.append(True)
 			else:
 				compatibility.append(False)
